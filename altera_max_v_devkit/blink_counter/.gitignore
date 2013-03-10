@@ -1,0 +1,5 @@
+db/
+incremental_db/
+simulation/
+BlinkCounter_nativelink_simulation.rpt
+*.bak

@@ -1,0 +1,6 @@
+# Ignore all files
+*
+# But keep Programmer Setup file
+!*.cdf
+# And the ignore file itself
+!.gitignore
