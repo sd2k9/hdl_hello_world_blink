@@ -15,18 +15,18 @@ For several development boards, see in the subdirectories.
 Hello World Board
 -----------------
 Altera
-   Device: Altera Max V Development Kit
-   Board: Max V Development Kit
-   Software: Altera Quartus II Version 12.1
+- Device: Altera Max V Development Kit
+- Board: Max V Development Kit
+- Software: Altera Quartus II Version 12.1
 
 Xilinx
-   Coming soon
+- Coming soon
 
 
 License
 -------
-GNU General Public License Version 3
-http://www.gnu.org/licenses/gpl.html
+- GNU General Public License Version 3
+- http://www.gnu.org/licenses/gpl.html
 
 Homepage
 --------

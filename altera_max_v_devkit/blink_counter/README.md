@@ -11,14 +11,14 @@ Along with a simple test bench
 
 Requirements
 ------------
-Device: Altera Max V
-Board: Max V Development Kit
-Software: Altera Quartus II Version 12.1
+- Device: Altera Max V
+- Board: Max V Development Kit
+- Software: Altera Quartus II Version 12.1
 
 License
 -------
-GNU General Public License Version 3
-http://www.gnu.org/licenses/gpl.html
+- GNU General Public License Version 3
+- http://www.gnu.org/licenses/gpl.html
 
 Homepage
 --------
