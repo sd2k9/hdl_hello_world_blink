@@ -1,5 +1,5 @@
-HDL Hello World
-===============
+HDL Hello Worlds
+================
 
 Function
 --------
@@ -7,13 +7,21 @@ A classical simple Hello World HDL description, which
 just blinks an LED with 0.5Hz and can be reset by a
 push button.
 
-Along with a simple test bench
+Along with a simple test bench.
 
-Requirements
-------------
-Device: Altera Max V
-Board: Max V Development Kit
-Software: Altera Quartus II Version 12.1
+For several development boards, see in the subdirectories.
+
+
+Hello World Board
+-----------------
+Altera
+   Device: Altera Max V Development Kit
+   Board: Max V Development Kit
+   Software: Altera Quartus II Version 12.1
+
+Xilinx
+   Coming soon
+
 
 License
 -------
