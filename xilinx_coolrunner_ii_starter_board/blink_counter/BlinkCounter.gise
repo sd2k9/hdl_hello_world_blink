@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<generated_project xmlns="http://www.xilinx.com/XMLSchema" xmlns:xil_pn="http://www.xilinx.com/XMLSchema">
+
+  <!--                                                          -->
+
+  <!--             For tool use only. Do not edit.              -->
+
+  <!--                                                          -->
+
+  <!-- ProjectNavigator created generated project file.         -->
+
+  <!-- For use in tracking generated file and other information -->
+
+  <!-- allowing preservation of process status.                 -->
+
+  <!--                                                          -->
+
+  <!-- Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved. -->
+
+  <version xmlns="http://www.xilinx.com/XMLSchema">11.1</version>
+
+  <sourceproject xmlns="http://www.xilinx.com/XMLSchema" xil_pn:fileType="FILE_XISE" xil_pn:name="BlinkCounter.xise"/>
+
+  <files xmlns="http://www.xilinx.com/XMLSchema">
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGDBUILD_LOG" xil_pn:name="BlinkCounter.bld"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_CHK" xil_pn:name="BlinkCounter.chk"/>
+    <file xil_pn:fileType="FILE_CMD_LOG" xil_pn:name="BlinkCounter.cmd_log"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_CXT" xil_pn:name="BlinkCounter.cxt"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_GYD" xil_pn:name="BlinkCounter.gyd"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_JEDEC" xil_pn:name="BlinkCounter.jed"/>
+    <file xil_pn:fileType="FILE_LFP" xil_pn:name="BlinkCounter.lfp"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="BlinkCounter.log"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_LSO" xil_pn:name="BlinkCounter.lso"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_MFD" xil_pn:name="BlinkCounter.mfd"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGA" xil_pn:name="BlinkCounter.nga"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGC" xil_pn:name="BlinkCounter.ngc"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGD" xil_pn:name="BlinkCounter.ngd"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_NGR" xil_pn:name="BlinkCounter.ngr"/>
+    <file xil_pn:fileType="FILE_PAD_MISC" xil_pn:name="BlinkCounter.pad"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_PNX" xil_pn:name="BlinkCounter.pnx"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="BlinkCounter.prj"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="BlinkCounter.rpt"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_STX" xil_pn:name="BlinkCounter.stx"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST_REPORT" xil_pn:name="BlinkCounter.syr"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="BlinkCounter.tim"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="BlinkCounter.tspec"/>
+    <file xil_pn:fileType="FILE_VHDL_INSTTEMPLATE" xil_pn:name="BlinkCounter.vhi"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_VM6" xil_pn:name="BlinkCounter.vm6"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="BlinkCounter.xml"/>
+    <file xil_pn:branch="Implementation" xil_pn:fileType="FILE_XST" xil_pn:name="BlinkCounter.xst"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="BlinkCounter_build.xml"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="BlinkCounter_envsettings.html"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="BlinkCounter_html"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="BlinkCounter_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="BlinkCounter_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_XRPT" xil_pn:name="BlinkCounter_ngdbuild.xrpt"/>
+    <file xil_pn:fileType="FILE_PAD_EXCEL_REPORT" xil_pn:name="BlinkCounter_pad.csv"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="BlinkCounter_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_HTML" xil_pn:name="BlinkCounter_summary.html"/>
+    <file xil_pn:fileType="FILE_XRPT" xil_pn:name="BlinkCounter_xst.xrpt"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="Testbench_beh.prj"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_ISIM_EXE" xil_pn:name="Testbench_isim_beh.exe"/>
+    <file xil_pn:fileType="FILE_ISIM_MISC" xil_pn:name="Testbench_isim_beh.wdb"/>
+    <file xil_pn:fileType="FILE_XST_PROJECT" xil_pn:name="Testbench_stx_beh.prj"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="_ngo"/>
+    <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/ngdbuild.xmsgs"/>
+    <file xil_pn:fileType="FILE_XMSGS" xil_pn:name="_xmsgs/xst.xmsgs"/>
+    <file xil_pn:fileType="FILE_LOG" xil_pn:name="fuse.log"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="isim"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_CMD" xil_pn:name="isim.cmd"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_LOG" xil_pn:name="isim.log"/>
+    <file xil_pn:fileType="FILE_FITTER_REPORT" xil_pn:name="webtalk_pn.xml"/>
+    <file xil_pn:branch="BehavioralSim" xil_pn:fileType="FILE_INI" xil_pn:name="xilinxsim.ini"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xlnx_auto_0_xdb"/>
+    <file xil_pn:fileType="FILE_DIRECTORY" xil_pn:name="xst"/>
+  </files>
+
+  <transforms xmlns="http://www.xilinx.com/XMLSchema">
+    <transform xil_pn:end_ts="1366542413" xil_pn:name="TRANEXT_compLibraries_CPLD" xil_pn:prop_ck="635986081690273460" xil_pn:start_ts="1366542413">
+      <status xil_pn:value="FailedRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1366569777" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1366569777">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1367145343" xil_pn:in_ck="5385180582953621736" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1367145343">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="BlinkCounter.vhdl"/>
+      <outfile xil_pn:name="TestBench.vhdl"/>
+    </transform>
+    <transform xil_pn:end_ts="1367145071" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-3401702776966666032" xil_pn:start_ts="1367145071">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1367145343" xil_pn:in_ck="5385180582953621736" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1367145343">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="BlinkCounter.vhdl"/>
+      <outfile xil_pn:name="TestBench.vhdl"/>
+    </transform>
+    <transform xil_pn:end_ts="1367145347" xil_pn:in_ck="5385180582953621736" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="1902876836455770973" xil_pn:start_ts="1367145343">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForOutputs"/>
+      <status xil_pn:value="OutputChanged"/>
+      <outfile xil_pn:name="Testbench_beh.prj"/>
+      <outfile xil_pn:name="Testbench_isim_beh.exe"/>
+      <outfile xil_pn:name="fuse.log"/>
+      <outfile xil_pn:name="isim"/>
+      <outfile xil_pn:name="isim.log"/>
+      <outfile xil_pn:name="xilinxsim.ini"/>
+    </transform>
+    <transform xil_pn:end_ts="1367145347" xil_pn:in_ck="7432171026198819215" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="7053206830842166233" xil_pn:start_ts="1367145347">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="Testbench_isim_beh.wdb"/>
+      <outfile xil_pn:name="isim.cmd"/>
+      <outfile xil_pn:name="isim.log"/>
+    </transform>
+    <transform xil_pn:end_ts="1366542781" xil_pn:name="TRAN_copyInitialToXSTAbstractSynthesis" xil_pn:start_ts="1366542781">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1366542781" xil_pn:name="TRAN_schematicsToHdl" xil_pn:prop_ck="-8041767287384088957" xil_pn:start_ts="1366542781">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1367144784" xil_pn:in_ck="2084397775182910188" xil_pn:name="TRANEXT_xstsynthesize_xbr" xil_pn:prop_ck="-5076717693166892379" xil_pn:start_ts="1367144756">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="WarningsGenerated"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="BlinkCounter.lso"/>
+      <outfile xil_pn:name="BlinkCounter.ngc"/>
+      <outfile xil_pn:name="BlinkCounter.ngr"/>
+      <outfile xil_pn:name="BlinkCounter.prj"/>
+      <outfile xil_pn:name="BlinkCounter.stx"/>
+      <outfile xil_pn:name="BlinkCounter.syr"/>
+      <outfile xil_pn:name="BlinkCounter.xst"/>
+      <outfile xil_pn:name="BlinkCounter_xst.xrpt"/>
+      <outfile xil_pn:name="_xmsgs/xst.xmsgs"/>
+      <outfile xil_pn:name="webtalk_pn.xml"/>
+      <outfile xil_pn:name="xst"/>
+    </transform>
+    <transform xil_pn:end_ts="1367144784" xil_pn:in_ck="3417117036892126620" xil_pn:name="TRAN_compileBCD2" xil_pn:prop_ck="-1865248905006508515" xil_pn:start_ts="1367144784">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+    </transform>
+    <transform xil_pn:end_ts="1367144802" xil_pn:in_ck="7836593684685113842" xil_pn:name="TRAN_ngdbuild" xil_pn:prop_ck="2820029809837737375" xil_pn:start_ts="1367144784">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="BlinkCounter.bld"/>
+      <outfile xil_pn:name="BlinkCounter.ngd"/>
+      <outfile xil_pn:name="BlinkCounter_ngdbuild.xrpt"/>
+      <outfile xil_pn:name="_ngo"/>
+      <outfile xil_pn:name="_xmsgs/ngdbuild.xmsgs"/>
+    </transform>
+    <transform xil_pn:end_ts="1367144818" xil_pn:in_ck="3417117036892119127" xil_pn:name="TRANEXT_vm6File_xbr" xil_pn:prop_ck="-7539954594041458611" xil_pn:start_ts="1367144802">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="WarningsGenerated"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="BlinkCounter.chk"/>
+      <outfile xil_pn:name="BlinkCounter.cxt"/>
+      <outfile xil_pn:name="BlinkCounter.gyd"/>
+      <outfile xil_pn:name="BlinkCounter.log"/>
+      <outfile xil_pn:name="BlinkCounter.mfd"/>
+      <outfile xil_pn:name="BlinkCounter.nga"/>
+      <outfile xil_pn:name="BlinkCounter.pad"/>
+      <outfile xil_pn:name="BlinkCounter.pnx"/>
+      <outfile xil_pn:name="BlinkCounter.rpt"/>
+      <outfile xil_pn:name="BlinkCounter.tim"/>
+      <outfile xil_pn:name="BlinkCounter.tspec"/>
+      <outfile xil_pn:name="BlinkCounter.vm6"/>
+      <outfile xil_pn:name="BlinkCounter.xml"/>
+      <outfile xil_pn:name="BlinkCounter_build.xml"/>
+      <outfile xil_pn:name="BlinkCounter_html"/>
+      <outfile xil_pn:name="BlinkCounter_pad.csv"/>
+    </transform>
+    <transform xil_pn:end_ts="1367144821" xil_pn:in_ck="3417117036892127991" xil_pn:name="TRANEXT_crtProg_xbr" xil_pn:prop_ck="5245363024343" xil_pn:start_ts="1367144818">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <outfile xil_pn:name="BlinkCounter.jed"/>
+    </transform>
+    <transform xil_pn:end_ts="1366546895" xil_pn:in_ck="3417117036892127991" xil_pn:name="TRAN_timRpt" xil_pn:prop_ck="111903974446" xil_pn:start_ts="1366546892">
+      <status xil_pn:value="AbortedRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="InputChanged"/>
+    </transform>
+    <transform xil_pn:end_ts="1366543594" xil_pn:in_ck="4011264589471919091" xil_pn:name="TRAN_createTimingConstraints" xil_pn:start_ts="1366543594">
+      <status xil_pn:value="SuccessfullyRun"/>
+      <status xil_pn:value="ReadyToRun"/>
+      <status xil_pn:value="OutOfDateForInputs"/>
+      <status xil_pn:value="InputChanged"/>
+    </transform>
+  </transforms>
+
+</generated_project>

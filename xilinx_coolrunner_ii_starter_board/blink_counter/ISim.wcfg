@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/rola/devel/hdl/hello_world_blink/xilinx_coolrunner_ii_starter_board/blink_counter/Testbench_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+            <top_module name="testbench" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="6" />
+   <wvobject fp_name="/testbench/clock" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/rst_n" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst_n</obj_property>
+      <obj_property name="ObjectShortName">rst_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/ledout" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ledout</obj_property>
+      <obj_property name="ObjectShortName">ledout</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/led_open" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">led_open[2:0]</obj_property>
+      <obj_property name="ObjectShortName">led_open[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/clock_rate" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clock_rate</obj_property>
+      <obj_property name="ObjectShortName">clock_rate</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/dut/cnt/q" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">q</obj_property>
+      <obj_property name="ObjectShortName">q</obj_property>
+   </wvobject>
+</wave_config>
