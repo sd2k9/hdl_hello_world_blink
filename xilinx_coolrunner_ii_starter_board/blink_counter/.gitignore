@@ -48,7 +48,6 @@ default.xreport
 fuse.log
 fuse.xmsgs
 fuseRelaunch.cmd
-isim.cmd
 isim.log
 pepExtractor.prj
 t1.dat

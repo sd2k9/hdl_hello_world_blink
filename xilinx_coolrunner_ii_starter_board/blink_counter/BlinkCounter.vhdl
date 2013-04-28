@@ -20,6 +20,9 @@
 -- *** Toplevel
 library ieee;
 use ieee.std_logic_1164.all;
+library UNISIM;
+--use UNISIM.vcomponents.CLK_DIV16;
+--use UNISIM.vcomponents.all;
 
 entity BlinkCounter is
 	generic
@@ -48,8 +51,9 @@ end entity BlinkCounter;
 architecture rtl of BlinkCounter is
 
    -- Signals
-	signal cout: integer range 0 to COUNT_STEPS;
-	signal reset: std_ulogic;     -- high active reset
+	signal cout: integer range 0 to COUNT_STEPS/16;     -- divided by 16 because we use clock divider
+	signal reset: std_ulogic;         -- high active reset
+	signal clk_div_by16: std_ulogic;  -- CLK divided by 16 with CPLD CLKDIV block
 
 	-- Component of the counter
 	component binary_counter is
@@ -65,31 +69,44 @@ architecture rtl of BlinkCounter is
 		enable	  : in std_ulogic;
 		q		     : out integer range MIN_COUNT to MAX_COUNT
 	);
+   end component binary_counter;
 
-   end component;
 
 begin
 
+   
+
+	-- Provide divided CLK (Xilinx CPLD Macro)
+   -- CLK_DIV16: Simple clock Divide by 16
+   --             CoolRunner-II
+   -- Xilinx HDL Language Template, version 14.5
+   -- clk_div16_inst : entity UNISIM.clk_div16
+	clk_div16_inst : component UNISIM.vcomponents.CLK_DIV16
+	   port map (
+      CLKDV => clk_div_by16,    -- Divided clock output
+      CLKIN => clk              -- Clock input
+   );
+	--clk_div_by16 <= clk;
+
    -- Instantiate Counter
-	cnt : binary_counter
+	cnt : component binary_counter
 	generic map
 	(
-		MAX_COUNT => COUNT_STEPS
+		MAX_COUNT => COUNT_STEPS/16     -- divided by 16 because we use clock divider
 	)
 	port map 
 	(
-		clk => clk,
+		clk => clk_div_by16,   -- use divided clock
 		reset => reset,
 		enable => '1',
 		q => cout
 	);
 
 	-- Form LED Output Signal
-	process (clk)
+	process (clk_div_by16)
 		variable   outval		   : std_ulogic;
 	begin
-		if (rising_edge(clk)) then
-
+		if rising_edge(clk_div_by16) then
 			if reset_n = '0' then
 				-- Reset the output
 				outval := '1';
