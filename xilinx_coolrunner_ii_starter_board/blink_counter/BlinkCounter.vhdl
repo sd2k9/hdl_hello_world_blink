@@ -32,16 +32,16 @@ entity BlinkCounter is
 
 	port
 	(
-		clk	     : in std_ulogic;  -- Clock Signals
-		reset_n	  : in std_ulogic;  -- low active reset
-		led        : out std_ulogic_vector(3 downto 0);  -- 4 User LEDs
+		clk	     : in std_logic;  -- Clock Signals
+		reset_n	  : in std_logic;  -- low active reset
+		led        : out std_logic_vector(3 downto 0);  -- 4 User LEDs
                                                                 -- (high active)
 		-- Other ports of Reference Board - not used
-		btn1       : in std_ulogic;  -- 2nd Push Button (low active)
-                sw0, sw1   : in std_ulogic;  -- slide buttons
+		btn1       : in std_logic;  -- 2nd Push Button (low active)
+                sw0, sw1   : in std_logic;  -- slide buttons
                 -- 7 Segment Display - all low active; see Reference Manual
-		disp_ena_n : out std_ulogic_vector(1 to 4);  -- 4 Digit Enabler
-		disp_seg_n : out std_ulogic_vector(1 to 8)  -- 7.1 Segments
+		disp_ena_n : out std_logic_vector(1 to 4);  -- 4 Digit Enabler
+		disp_seg_n : out std_logic_vector(1 to 8)  -- 7.1 Segments
 	);
 
 end entity BlinkCounter;

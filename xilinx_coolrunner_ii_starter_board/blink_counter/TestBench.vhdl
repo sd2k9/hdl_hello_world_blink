@@ -33,11 +33,10 @@ end entity Testbench;
 architecture beh of Testbench is
 
    -- Signals
-	signal clock: std_ulogic := '0';
-	signal rst_n: std_ulogic;
-	signal ledout: std_ulogic;               -- The blinking led
-	signal led_open: std_ulogic_vector(2 downto 0); -- Not used LED outputs
-	
+	signal clock:    std_ulogic := '0';
+	signal rst_n:    std_ulogic;
+	signal ledout:   std_ulogic;               -- The blinking led
+	signal led_open: std_ulogic_vector(3 downto 1); -- Not used LED outputs
 
 	-- Component of the DUT
         component BlinkCounter
@@ -45,13 +44,15 @@ architecture beh of Testbench is
           -- generic (
           --   COUNT_STEPS : natural);
           port (
-            clk        : in  std_ulogic;
-            reset_n    : in  std_ulogic;
-            led        : out std_ulogic_vector(3 downto 0);
-            btn1       : in  std_ulogic;
-            sw0, sw1   : in  std_ulogic;
-            disp_ena_n : out std_ulogic_vector(1 to 4);
-            disp_seg_n : out std_ulogic_vector(1 to 8));
+            clk        : in  std_logic;
+            reset_n    : in  std_logic;
+            led        : out std_logic_vector(3 downto 0);
+            -- Optimized away in POST, therefore removed here
+            -- RTL relies on configuration port mapping
+            -- btn1       : in  std_ulogic;
+            -- sw0, sw1   : in  std_ulogic;
+            disp_ena_n : out std_logic_vector(1 to 4);
+            disp_seg_n : out std_logic_vector(1 to 8));
         end component BlinkCounter;
 
 begin
@@ -64,13 +65,16 @@ begin
     port map (
       clk        => clock,
       reset_n    => rst_n,
-      led(3 downto 1) => led_open,
-		led(0)        => ledout,
+      led(3) => led_open(3),  -- single indices because std_logic<->std_ulogic conversion is possible
+		led(2) => led_open(2),  -- but not for *_vector
+		led(1) => led_open(1),
+		led(0) => ledout,        -- this one we really use
       --led => (led_open, ledout),
-      -- Not used ports
-      btn1       => 'X',
-      sw0        => 'X',
-      sw1        => 'X',
+      -- Not used ports: Optimized away in POST, therefore removed here
+      -- RTL relies on configuration port mapping
+      --  btn1       => 'X',
+      -- sw0        => 'X',
+      -- sw1        => 'X',
       disp_ena_n => open,
       disp_seg_n => open);
 
