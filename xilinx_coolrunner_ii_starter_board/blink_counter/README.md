@@ -15,6 +15,10 @@ Requirements
 - Board: Coolrunner II Starter Board
 - Software: Xilinx ISE 14.5
 
+How to program the device
+-------------------------
+Just run the supplied script: ./program_it.sh
+
 License
 -------
 - GNU General Public License Version 3
