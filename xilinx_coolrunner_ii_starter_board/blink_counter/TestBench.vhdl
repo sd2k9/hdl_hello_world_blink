@@ -35,8 +35,9 @@ architecture beh of Testbench is
    -- Signals
 	signal clock:    std_ulogic := '0';
 	signal rst_n:    std_ulogic;
-	signal ledout:   std_ulogic;               -- The blinking led
-	signal led_open: std_ulogic_vector(3 downto 1); -- Not used LED outputs
+	signal ledout_n:   std_logic_vector(3 downto 0);            -- The blinking leds
+        -- The blinking leds, inverted (1: on, 0: off)
+	signal ledout_show:   std_ulogic_vector(3 downto 0);
 
 	-- Component of the DUT
         component BlinkCounter
@@ -65,10 +66,7 @@ begin
     port map (
       clk        => clock,
       reset_n    => rst_n,
-      led_n(3) => led_open(3),  -- single indices because std_logic<->std_ulogic conversion is possible
-		led_n(2) => led_open(2),  -- but not for *_vector
-		led_n(1) => led_open(1),
-		led_n(0) => ledout,        -- this one we really use
+      led_n => ledout_n,
       -- Not used ports: Optimized away in POST, therefore removed here
       -- RTL relies on configuration port mapping
       --  btn1       => 'X',
@@ -76,6 +74,8 @@ begin
       -- sw1        => 'X',
       disp_ena_n => open,
       disp_seg_n => open);
+  -- inverted for display
+  ledout_show <= To_StdULogicVector(not ledout_n);
 
    -- Clock Process
 	process is

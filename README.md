@@ -4,8 +4,8 @@ HDL Hello Worlds
 Function
 --------
 A classical simple Hello World HDL description, which
-just blinks an LED with 0.5Hz and can be reset by a
-push button.
+just blinks an LED (or more) with 0.5Hz and can be reset
+by a push button.
 
 Along with a simple test bench.
 

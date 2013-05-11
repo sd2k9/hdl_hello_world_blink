@@ -20,6 +20,7 @@
 -- *** Toplevel
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;      -- +
 library UNISIM;
 --use UNISIM.vcomponents.CLK_DIV16;
 --use UNISIM.vcomponents.all;
@@ -27,7 +28,9 @@ library UNISIM;
 entity BlinkCounter is
 	generic
 	(
-		COUNT_STEPS : natural := 8*1000*1000  -- 8 MHz
+          COUNT_STEPS : natural := 8*1000*1000  -- 8 MHz
+          -- Devel Speed Up: 1024
+          -- COUNT_STEPS : natural := 1024
 	);
 
 	port
@@ -53,7 +56,9 @@ architecture rtl of BlinkCounter is
 	signal cout: integer range 0 to COUNT_STEPS/16;     -- divided by 16 because we use clock divider
 	signal reset: std_ulogic;         -- high active reset
 	signal clk_div_by16: std_ulogic;  -- CLK divided by 16 with CPLD CLKDIV block
-
+        signal ladder : unsigned(3 downto 0) := "0000";  -- LEDs as binary ladder
+        signal one_step_up : std_ulogic := '0';  -- one clock impulse high for counting up
+  
 	-- Component of the counter
 	component binary_counter is
 	generic
@@ -73,62 +78,69 @@ architecture rtl of BlinkCounter is
 
 begin
 
-   
-
-	-- Provide divided CLK (Xilinx CPLD Macro)
-   -- CLK_DIV16: Simple clock Divide by 16
-   --             CoolRunner-II
-   -- Xilinx HDL Language Template, version 14.5
-   -- clk_div16_inst : entity UNISIM.clk_div16
-	clk_div16_inst : component UNISIM.vcomponents.CLK_DIV16
-	   port map (
+  -- Provide divided CLK (Xilinx CPLD Macro)
+  -- CLK_DIV16: Simple clock Divide by 16
+  --             CoolRunner-II
+  -- Xilinx HDL Language Template, version 14.5
+  -- clk_div16_inst : entity UNISIM.clk_div16
+  clk_div16_inst : component UNISIM.vcomponents.CLK_DIV16
+    port map (
       CLKDV => clk_div_by16,    -- Divided clock output
       CLKIN => clk              -- Clock input
    );
-	--clk_div_by16 <= clk;
+  --clk_div_by16 <= clk;
 
-   -- Instantiate Counter
-	cnt : component binary_counter
-	generic map
-	(
-		MAX_COUNT => COUNT_STEPS/16     -- divided by 16 because we use clock divider
-	)
-	port map 
-	(
-		clk => clk_div_by16,   -- use divided clock
-		reset => reset,
-		enable => '1',
-		q => cout
-	);
+  -- Instantiate Counter
+  cnt : component binary_counter
+    generic map
+    (
+      MAX_COUNT => COUNT_STEPS/16     -- divided by 16 because we use clock divider
+      )
+    port map
+    (
+      clk => clk_div_by16,   -- use divided clock
+      reset => reset,
+      enable => '1',
+      q => cout
+      );
 
-	-- Form LED Output Signal
-	process (clk_div_by16)
-		variable   outval		   : std_ulogic;
-	begin
-		if rising_edge(clk_div_by16) then
-			if reset_n = '0' then
-				-- Reset the output
-				outval := '1';
-			elsif  cout = 1 then
-			   -- We're inverting at this stage
-            outval := not outval;
-			else -- Keep value
-			   outval := outval;
-			end if;
-		end if;
-		-- Output the variable
-		led_n(0) <= outval;
-	end process;
+  -- Form LED Output Signal
+  process (clk_div_by16)
+  begin
+    if rising_edge(clk_div_by16) then
+      if reset_n = '0' or one_step_up = '1' then
+        -- Reset the output former on reset or after counting one up
+        one_step_up <= '0';
+      elsif  cout = 1 then
+        -- Next step!
+        one_step_up <= '1';
+      else -- Keep value
+        one_step_up <= one_step_up;
+      end if;
+    end if;
+  end process;
 
-	-- Other LED is always off
-	led_n(3 downto 1) <= "111";
+  -- Other LEDs are laddered-up
+  process (clk_div_by16)
+  begin
+    if (rising_edge(clk_div_by16)) then
+      if reset = '1' then
+        -- Reset the counter to 0
+        ladder <= (others => '0');
+      elsif one_step_up = '1' then
+        -- Increment the counter for every change
+        ladder <= ladder + 1;
+      end if;
+    end if;
+  end process;
+  led_n <=  Std_Logic_Vector(not ladder);  -- assign and invert
 
-   -- 7 Segment output also disabled
-   disp_ena_n <= (others => '1');
-   disp_seg_n <= (others => '1');
-	
-	-- Invert Reset for counter block
-	reset <= not reset_n;
+  -- 7 Segment output also disabled
+  disp_ena_n <= (others => '1');
+  disp_seg_n <= (others => '1');
+
+  -- Invert Reset for counter block
+  reset <= not reset_n;
 
 end architecture rtl;
 
