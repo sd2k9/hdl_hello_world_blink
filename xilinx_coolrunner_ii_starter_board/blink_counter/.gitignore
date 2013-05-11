@@ -59,3 +59,9 @@ t6.phd
 tmperr.err
 webtalk_pn.xml
 xilinxsim.ini
+Module_beh.prj
+TestBench_post_envsettings.html
+TestBench_post_summary.html
+TestBench_rtl_summary.html
+Testbench_post_summary.html
+Testbench_rtl_summary.html

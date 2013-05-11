@@ -35,9 +35,9 @@ configuration TestBench_rtl of TestBench is
       use configuration work.BlinkCounter_rtl
       port map (
 		   -- map all default ports
-			clk =>  clk,
+			clk     => clk,
 			reset_n => reset_n,
-			led => led,
+			led_n   => led_n,
 			disp_ena_n => disp_ena_n,
 			disp_seg_n => disp_seg_n,
 			-- Not used ports: Optimized away in POST, therefore removed in TestBench

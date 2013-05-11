@@ -46,7 +46,7 @@ architecture beh of Testbench is
           port (
             clk        : in  std_logic;
             reset_n    : in  std_logic;
-            led        : out std_logic_vector(3 downto 0);
+            led_n      : out std_logic_vector(3 downto 0);
             -- Optimized away in POST, therefore removed here
             -- RTL relies on configuration port mapping
             -- btn1       : in  std_ulogic;
@@ -65,11 +65,10 @@ begin
     port map (
       clk        => clock,
       reset_n    => rst_n,
-      led(3) => led_open(3),  -- single indices because std_logic<->std_ulogic conversion is possible
-		led(2) => led_open(2),  -- but not for *_vector
-		led(1) => led_open(1),
-		led(0) => ledout,        -- this one we really use
-      --led => (led_open, ledout),
+      led_n(3) => led_open(3),  -- single indices because std_logic<->std_ulogic conversion is possible
+		led_n(2) => led_open(2),  -- but not for *_vector
+		led_n(1) => led_open(1),
+		led_n(0) => ledout,        -- this one we really use
       -- Not used ports: Optimized away in POST, therefore removed here
       -- RTL relies on configuration port mapping
       --  btn1       => 'X',

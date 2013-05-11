@@ -34,8 +34,7 @@ entity BlinkCounter is
 	(
 		clk	     : in std_logic;  -- Clock Signals
 		reset_n	  : in std_logic;  -- low active reset
-		led        : out std_logic_vector(3 downto 0);  -- 4 User LEDs
-                                                                -- (high active)
+		led_n      : out std_logic_vector(3 downto 0);  -- 4 User LEDs (low active)
 		-- Other ports of Reference Board - not used
 		btn1       : in std_logic;  -- 2nd Push Button (low active)
                 sw0, sw1   : in std_logic;  -- slide buttons
@@ -118,11 +117,11 @@ begin
 			end if;
 		end if;
 		-- Output the variable
-		led(0) <= outval;
+		led_n(0) <= outval;
 	end process;
 
 	-- Other LED is always off
-	led(3 downto 1) <= "000";
+	led_n(3 downto 1) <= "111";
 
    -- 7 Segment output also disabled
    disp_ena_n <= (others => '1');
