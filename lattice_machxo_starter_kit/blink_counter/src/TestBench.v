@@ -25,5 +25,34 @@ Example: Blink the LED in one second takt
 
 // *** Testbench for the counter
 module TestBench () ;
-   // ...
+   // *** Signals
+   wire [8:1] LED, LEDx;  // LED, low active and inverted (high-active)
+   reg        CLK = 0;
+   tri1       BUTTONx;  // Push Button low active, acts as Reset
+
+
+// *** DUT Instance
+module BlinkCounter (
+   .clk(CLK),      // 24MHz Clock (Pin 55 PClkT2_1)
+   .btnx(BUTTONx), // low active Button (Pin 36), need to configure internal Pull-Up
+                   // Reset when low (pushed)
+   .ledx(LEDx)     // 8 output LED, low active
+);
+
+// *** Generate 24MHz Clock
+always begin: clk_gen
+   #(0.5*1e9/24e6) CLK <= ~CLK;  // Invert every half period
+end
+
+// *** Invert LED output for convenience
+assign LED = ~LEDx;
+
+// *** Do reset at the beginning
+initial begin
+   BUTTONx <= 0;  // Reset
+   #10_000;     // wait 10 ms
+   BUTTONx <= Z;  // Release and GO
+end
+
+
 endmodule // TestBench
