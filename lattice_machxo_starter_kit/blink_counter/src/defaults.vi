@@ -1,0 +1,33 @@
+/*
+HDL Hello World for Lattice  MachXO Starter Kit
+defaults.vi - Default settings, included in every source file
+Copyright (C) 2013, Robert Lange <sd2k9@sethdepot.org>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Example: Blink the LED in one second takt
+*/
+
+
+// *** Reset everything
+`resetall
+
+// *** No implicit nets allowed
+`default_nettype none
+
+// *** Timescale: 1 ns simulation time, 1ps resolution
+`timescale 1 ns / 1 ps
+
+
+   TODO: und was noch? siehe reference guide für macro directives
