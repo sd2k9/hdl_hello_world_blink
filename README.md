@@ -24,6 +24,10 @@ Xilinx
 - Board: Coolrunner II Starter Board
 - Software: Xilinx ISE 14.5
 
+Lattice
+- Device: Lattice MachXO
+- Board: MachXO Starter Kit
+- Software: Lattice Diamond version XX
 License
 -------
 - GNU General Public License Version 3
