@@ -36,12 +36,14 @@ module BlinkCounter (
    // *** Functions
    // Determine register size in bits to store the unsigned value limit within
    function automatic integer regsize (input integer limit);
+   begin
       regsize = 1;   // Initial value
       while (limit > 1) begin
-	 regsize++;
+	 regsize = regsize+1;
 	 limit = limit>>1;
       end
-      return regsize;   // Done
+      // Done
+   end
    endfunction
 
    // *** Signals
@@ -69,8 +71,15 @@ module BlinkCounter (
    // *** Counter to generate update tick every 0.5s
    defparam counter_inst.MinValue = 0;    // Min counter value
    defparam counter_inst.MaxValue =      // Max counter value, 0.5s for one run
-	   0.5*(InputClock*10**6)/(1<<ClkDivider_DivideBy)
+            0.5*(InputClock*10**6)/(1<<ClkDivider_DivideBy);
+`ifdef __ICARUS__
+   // Icarus Verilog cannot handle constant functions - so fake it
+   // TAKE CARE ABOUT MISMATCH!!!
+   defparam counter_inst.Size     = 19;  // Bit size of counter
+`else
+   // Use constant function for Synthesis - TAKE CARE ABOUT MISMATCH!!!
    defparam counter_inst.Size     = regsize(counter_inst.MaxValue);    // Bit size of counter
+`endif
    BinaryCounter counter_inst(
 	.clk(clkdiv), // CLOCK
         .rstx(rstx), // Sync Low Active Reset
@@ -80,7 +89,7 @@ module BlinkCounter (
 
 
    // *** Update LED
-   always @ (posedge clkdiv) begin; led_update
+   always @ (posedge clkdiv) begin: led_update
       if (rstx == 0) begin
 	 // Reset - All off
 	 ledx <= 8'hFF;
@@ -105,30 +114,33 @@ module ClkDivider (
 
    // *** Variables
    genvar gi;       // Generate Loop Variable
-   reg [DivideBy:0] divclk;   // Clock of the divider stages
+   reg [DivideBy:1] divclk_d;   // Output (Data) of the divider stages
+   wire [DivideBy:0] divclk_clk;   // Clock Input of the divider stages
+                                   // last one unused
 
-   // *** Clock input
-   assign divclk[0] = clkin;
+   // *** Clock input first stage
+   assign divclk_clk[0] = clkin;
 
    // *** Divider stages
    generate
       for (gi=1; gi<=DivideBy; gi=gi+1)
 	begin: divider
-	   always @ (posedge divclk[gi-1] or negedge async_rstx) begin
+	   assign divclk_clk[gi] = divclk_d[gi]; // Clock Input
+	   always @ (posedge divclk_clk[gi-1] or negedge async_rstx) begin
 	      if (async_rstx == 0) begin
 		 // Reset the divider
-		 divclk[gi] <= 0;
+		 divclk_d[gi] <= 0;
 	      end
 	      else begin
 		 // Divide by one
-		 divclk[gi] <= not divclk[gi1];
+		 divclk_d[gi] <= ~divclk_d[gi];
 	      end
 	   end
 	end    // divider
    endgenerate
 
    // *** Clock output
-   assign clkout = divclk[DivideBy];
+   assign clkout = divclk_d[DivideBy];
 
 endmodule // counter
 

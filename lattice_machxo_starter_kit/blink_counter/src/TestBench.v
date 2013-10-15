@@ -25,14 +25,14 @@ Example: Blink the LED in one second takt
 
 // *** Testbench for the counter
 module TestBench () ;
-   // *** Signals
-   wire [8:1] LED, LEDx;  // LED, low active and inverted (high-active)
-   reg        CLK = 0;
-   tri1       BUTTONx;  // Push Button low active, acts as Reset
-
+// *** Signals
+wire [8:1] LED, LEDx;  // LED, low active and inverted (high-active)
+reg        CLK = 0;
+tri1       BUTTONx;  // Push Button low active, acts as Reset
+reg        BUTTONx_driver = 1'bz;  // Driver for BUTTONx
 
 // *** DUT Instance
-module BlinkCounter (
+BlinkCounter DUT_inst (
    .clk(CLK),      // 24MHz Clock (Pin 55 PClkT2_1)
    .btnx(BUTTONx), // low active Button (Pin 36), need to configure internal Pull-Up
                    // Reset when low (pushed)
@@ -49,9 +49,25 @@ assign LED = ~LEDx;
 
 // *** Do reset at the beginning
 initial begin
-   BUTTONx <= 0;  // Reset
-   #10_000;     // wait 10 ms
-   BUTTONx <= Z;  // Release and GO
+   BUTTONx_driver <= 1'b0;  // Reset
+   #10_000_000;     // wait 10 ms
+   BUTTONx_driver <= 1'bz;  // Release and GO
+end
+assign BUTTONx = BUTTONx_driver;
+
+// *** Run for 1.1s as first trial
+initial begin
+   //   #1_100_000_000;
+   // 11 ms
+   #11_000_000;
+   $finish;
+end
+
+// *** Dump waveform values for simulation
+initial begin
+   $dumpfile("TestBench.dump.lxt");   // Name of dump file
+   $dumpvars(0, TestBench);   // Dump all hierarchy
+   // $dumpvars;              // Same as above
 end
 
 

@@ -26,8 +26,5 @@ Example: Blink the LED in one second takt
 // *** No implicit nets allowed
 `default_nettype none
 
-// *** Timescale: 1 ns simulation time, 1ps resolution
-`timescale 1 ns / 1 ps
-
-
-   TODO: und was noch? siehe reference guide für macro directives
+// *** Timescale: 1 ns simulation time, 100ps resolution
+`timescale 1 ns / 100 ps
