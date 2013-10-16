@@ -52,14 +52,18 @@ initial begin
    BUTTONx_driver <= 1'b0;  // Reset
    #10_000_000;     // wait 10 ms
    BUTTONx_driver <= 1'bz;  // Release and GO
+   // Okay, try another reset for fun :-)
+   #1_111_111;     // wait 1.1111 ms
+   BUTTONx_driver <= 1'b0;  // Reset
+   #1_000_000;     // wait 1 ms
+   BUTTONx_driver <= 1'bz;  // Release and GO
 end
 assign BUTTONx = BUTTONx_driver;
 
 // *** Run for 1.1s as first trial
 initial begin
-   //   #1_100_000_000;
-   // 11 ms
-   #11_000_000;
+   #1_100_000_000;    // 1.1s
+   // #20_000_000;    // 20 ms
    $finish;
 end
 

@@ -23,6 +23,7 @@ Example: Blink the LED in one second takt
 `include "defaults.vi"
 
 
+// --------------------------------------------------------------------------------
 // *** BlinkCounter Top Module
 module BlinkCounter (
    input 	    clk, // 24MHz Clock (Pin 55 PClkT2_1)
@@ -47,26 +48,28 @@ module BlinkCounter (
    endfunction
 
    // *** Signals
-   wire 	    clkdiv;   // Divided Clock by 2^ClkDivider_DivideBy
-   reg 		    rstff1, rstff2;   // Reset synchronizer FFs
-   reg 		    rstx;     // Synchronous low active Reset in clkdiv domain
-   wire 	    led_tick; // 1 clkdiv long tick to increment the LED counter
+   wire     clkdiv;   // Divided Clock by 2^ClkDivider_DivideBy
+   wire	    clk_rstx;     // Synchronous low active Reset in clk domain
+   wire     rstx;     // Synchronous low active Reset in clkdiv domain, delayed
+   wire     led_tick; // 1 clkdiv long tick to increment the LED counter
+
+   // *** Reset Handling
+   ResetGeneration ResetGeneration_inst (
+			.clk(clk),
+		        .clkdiv(clkdiv),
+			.async_rstx_in(btnx), // Reset in
+		        .clk_rstx(clk_rstx),   // RST in clk domain
+		        .clkdiv_rstx(rstx)     // RST in clkdiv domain, filtered
+		   );
 
    // *** Clock Divider
    defparam ClkDivider_inst.DivideBy = ClkDivider_DivideBy;     // Divide by 2^X
-   ClkDivider ClkDivider_inst(
+   ClkDivider ClkDivider_inst (
 		  .clkin(clk),
 		  .clkout(clkdiv),
-		  .async_rstx(btnx)
+		  .rstx(clk_rstx)   // RST in clk domain
 	      );
 
-
-   // *** Sync Reset in clkdiv domain
-   always @(posedge clkdiv) begin: reset_sync
-      rstff1 <= btnx;
-      rstff2 <= rstff1;
-      rstx <= rstff1 || rstff2;
-   end
 
    // *** Counter to generate update tick every 0.5s
    defparam counter_inst.MinValue = 0;    // Min counter value
@@ -82,7 +85,7 @@ module BlinkCounter (
 `endif
    BinaryCounter counter_inst(
 	.clk(clkdiv), // CLOCK
-        .rstx(rstx), // Sync Low Active Reset
+        .rstx(rstx), // ASync Low Active Reset (but can be synchronized :-)
         .counter(), // Counter value
         .ovr(led_tick) // Overflow flag, set for one clk tick when the counter overflows
    );
@@ -104,11 +107,55 @@ module BlinkCounter (
 endmodule // BlinkCounter
 
 
+// --------------------------------------------------------------------------------
+// *** Reset generation
+// Special care must be taken about reset filtering, because Reset also stops
+// the Clock divider. To provide also a sync Reset in clkdiv domain it must be
+// delayed and re-created.
+module ResetGeneration (
+   input      clk,      // Original clk
+   input      clkdiv,   // Derived and divided clk
+   input async_rstx_in, // Asynchronous reset
+   output reg clk_rstx, // RST in clk domain
+   output reg clkdiv_rstx // RST in clkdiv domain, filtered
+   );
+
+   // *** Signals
+   reg 	[3:1] rstff;    // Reset synchronizer FFs
+   reg 	[3:1] rstdivff; // Reset synchronizer FFs for clkdiv
+
+   // *** Sync Reset in clk domain
+   always @(posedge clk) begin: reset_clk_sync
+      rstff[1] <= async_rstx_in;
+      rstff[2] <= rstff[1];
+      rstff[3] <= rstff[2];
+      clk_rstx <= rstff[1] || rstff[2] || rstff[3];
+   end
+
+   // *** Detect rst and shift into clkdiv domain
+   always @(posedge clkdiv or negedge clk_rstx) begin: reset_clkdiv_sync
+      if (clk_rstx == 0) begin
+	 // Async reset the storage register
+	 rstdivff <= 'b0;
+      end
+      else begin
+	 // Delay rst when clock's back
+	 rstdivff[1] <= clk_rstx;
+	 rstdivff[2] <= rstdivff[1];
+	 rstdivff[3] <= rstdivff[2];
+	 clkdiv_rstx <= rstdivff[3];
+      end
+   end
+
+endmodule // ResetGeneration
+
+
+// --------------------------------------------------------------------------------
 // *** Clock Divider
 module ClkDivider (
    input  clkin,      // Input CLOCK
    output clkout,     // Divided Clock
-   input  async_rstx  // ASync Low Active Reset
+   input  rstx        // ASyncronous Low Active Reset
    );
    parameter DivideBy = 1;   // Divide Clock by 2^DivideBy
 
@@ -126,8 +173,8 @@ module ClkDivider (
       for (gi=1; gi<=DivideBy; gi=gi+1)
 	begin: divider
 	   assign divclk_clk[gi] = divclk_d[gi]; // Clock Input
-	   always @ (posedge divclk_clk[gi-1] or negedge async_rstx) begin
-	      if (async_rstx == 0) begin
+	   always @ (posedge divclk_clk[gi-1] or negedge rstx) begin
+	      if (rstx == 0) begin
 		 // Reset the divider
 		 divclk_d[gi] <= 0;
 	      end
@@ -145,6 +192,8 @@ module ClkDivider (
 endmodule // counter
 
 
+
+// --------------------------------------------------------------------------------
 // *** Counter module
 module BinaryCounter (
    input  clk, // CLOCK
