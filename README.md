@@ -27,7 +27,8 @@ Xilinx
 Lattice
 - Device: Lattice MachXO
 - Board: MachXO Starter Kit
-- Software: Lattice Diamond version XX
+- Software: Lattice Diamond version 2.2
+
 License
 -------
 - GNU General Public License Version 3
