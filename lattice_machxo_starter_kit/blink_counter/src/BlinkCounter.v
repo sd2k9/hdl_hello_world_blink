@@ -26,22 +26,26 @@ Example: Blink the LED in one second takt
 // --------------------------------------------------------------------------------
 // *** BlinkCounter Top Module
 module BlinkCounter (
-   input 	    clk, // 24MHz Clock (Pin 55 PClkT2_1)
-   input 	    btnx, // low active Button (Pin 36), need to configure internal Pull-Up
+   input 	    wire clk, // 24MHz Clock (Pin 55 PClkT2_1)
+   input 	    wire btnx, // low active Button (Pin 36), need to configure internal Pull-Up
 		          // Async Reset when low (pushed)
    output reg [8:1] ledx  // 8 output LED, low active
 );
    parameter InputClock = 24.0;      // Input Clock in MHz
    localparam ClkDivider_DivideBy = 5;     // Divide CLK by 2^5=32
+   localparam CounterMaxValue =      // Max counter value, 0.5s for one run
+            0.5*(InputClock*10**6)/(1<<ClkDivider_DivideBy);
 
    // *** Functions
    // Determine register size in bits to store the unsigned value limit within
    function automatic integer regsize (input integer limit);
+	   integer l;
    begin
       regsize = 1;   // Initial value
-      while (limit > 1) begin
-	 regsize = regsize+1;
-	 limit = limit>>1;
+	   l = limit;    // Here too
+      while (l > 1) begin
+	    regsize = regsize+1;
+	    l = l>>1;
       end
       // Done
    end
@@ -49,7 +53,7 @@ module BlinkCounter (
 
    // *** Signals
    wire     clkdiv;   // Divided Clock by 2^ClkDivider_DivideBy
-   wire	    clk_rstx;     // Synchronous low active Reset in clk domain
+   wire	    clk_rstx; // Synchronous low active Reset in clk domain
    wire     rstx;     // Synchronous low active Reset in clkdiv domain, delayed
    wire     led_tick; // 1 clkdiv long tick to increment the LED counter
 
@@ -73,15 +77,15 @@ module BlinkCounter (
 
    // *** Counter to generate update tick every 0.5s
    defparam counter_inst.MinValue = 0;    // Min counter value
-   defparam counter_inst.MaxValue =      // Max counter value, 0.5s for one run
-            0.5*(InputClock*10**6)/(1<<ClkDivider_DivideBy);
+   defparam counter_inst.MaxValue = CounterMaxValue; // Max counter value, 0.5s for one run
+
 `ifdef __ICARUS__
    // Icarus Verilog cannot handle constant functions - so fake it
    // TAKE CARE ABOUT MISMATCH!!!
    defparam counter_inst.Size     = 19;  // Bit size of counter
 `else
    // Use constant function for Synthesis - TAKE CARE ABOUT MISMATCH!!!
-   defparam counter_inst.Size     = regsize(counter_inst.MaxValue);    // Bit size of counter
+   defparam counter_inst.Size     = regsize(CounterMaxValue);    // Bit size of counter
 `endif
    BinaryCounter counter_inst(
 	.clk(clkdiv), // CLOCK
@@ -113,11 +117,11 @@ endmodule // BlinkCounter
 // the Clock divider. To provide also a sync Reset in clkdiv domain it must be
 // delayed and re-created.
 module ResetGeneration (
-   input      clk,      // Original clk
-   input      clkdiv,   // Derived and divided clk
-   input async_rstx_in, // Asynchronous reset
-   output reg clk_rstx, // RST in clk domain
-   output reg clkdiv_rstx // RST in clkdiv domain, filtered
+   input      wire clk,      // Original clk
+   input      wire clkdiv,   // Derived and divided clk
+   input 	  wire async_rstx_in, // Asynchronous reset
+   output 	  reg  clk_rstx, // RST in clk domain
+   output 	  reg  clkdiv_rstx // RST in clkdiv domain, filtered
    );
 
    // *** Signals
@@ -153,9 +157,9 @@ endmodule // ResetGeneration
 // --------------------------------------------------------------------------------
 // *** Clock Divider
 module ClkDivider (
-   input  clkin,      // Input CLOCK
-   output clkout,     // Divided Clock
-   input  rstx        // ASyncronous Low Active Reset
+   input  wire clkin,      // Input CLOCK
+   output wire clkout,     // Divided Clock
+   input  wire rstx        // ASyncronous Low Active Reset
    );
    parameter DivideBy = 1;   // Divide Clock by 2^DivideBy
 
@@ -195,15 +199,15 @@ endmodule // counter
 
 // --------------------------------------------------------------------------------
 // *** Counter module
-module BinaryCounter (
-   input  clk, // CLOCK
-   input  rstx, // Sync Low Active Reset
-   output reg [Size-1:0] counter, // Counter value
-   output reg ovr // Overflow flag, set for one clk tick when the counter overflows
-   );
+module BinaryCounter ( clk, rstx, counter, ovr );
    parameter integer MinValue = 0;    // Min counter value
    parameter integer MaxValue = 32;   // Max counter value
    parameter integer Size     = 5;    // Bit size of counter
+
+   input  wire clk; // CLOCK
+   input  wire rstx; // Sync Low Active Reset
+   output reg [Size-1:0] counter; // Counter value
+   output reg ovr; // Overflow flag, set for one clk tick when the counter overflows
 
    // *** Do some assertion checks
    initial begin
