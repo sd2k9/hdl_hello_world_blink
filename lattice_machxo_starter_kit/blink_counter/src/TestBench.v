@@ -49,8 +49,13 @@ assign LED = ~LEDx;
 
 // *** Do reset at the beginning
 initial begin
+   // Simulate GSR Pulse on Device Startup
    BUTTONx_driver <= 1'b0;  // Reset
-   #10_000_000;     // wait 10 ms
+   #1_000;     // wait 1 us
+   BUTTONx_driver <= 1'bz;  // Initial: Released
+   #5_000_000;     // wait 5 ms
+   BUTTONx_driver <= 1'b0;  // Reset
+   #5_000_000;     // wait 10 ms
    BUTTONx_driver <= 1'bz;  // Release and GO
    // Okay, try another reset for fun :-)
    #1_111_111;     // wait 1.1111 ms

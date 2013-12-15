@@ -96,7 +96,7 @@ module BlinkCounter (
 
 
    // *** Update LED
-   always @ (posedge clkdiv) begin: led_update
+   always @ (posedge clkdiv or negedge rstx) begin: led_update
       if (rstx == 0) begin
 	 // Reset - All off
 	 ledx <= 8'hFF;
@@ -136,19 +136,13 @@ module ResetGeneration (
       clk_rstx <= rstff[1] || rstff[2] || rstff[3];
    end
 
-   // *** Detect rst and shift into clkdiv domain
-   always @(posedge clkdiv or negedge clk_rstx) begin: reset_clkdiv_sync
-      if (clk_rstx == 0) begin
-	 // Async reset the storage register
-	 rstdivff <= 'b0;
-      end
-      else begin
-	 // Delay rst when clock's back
-	 rstdivff[1] <= clk_rstx;
-	 rstdivff[2] <= rstdivff[1];
-	 rstdivff[3] <= rstdivff[2];
-	 clkdiv_rstx <= rstdivff[3];
-      end
+
+   // *** Shift clk_rstx into clkdiv domain
+   always @(posedge clk) begin: reset_clkdiv_sync
+      if (clk_rstx == 0)
+	clkdiv_rstx <= 0;
+      else if (clkdiv) // Acts as clk enable
+	clkdiv_rstx <= clk_rstx;
    end
 
 endmodule // ResetGeneration
@@ -166,25 +160,27 @@ module ClkDivider (
    // *** Variables
    genvar gi;       // Generate Loop Variable
    reg [DivideBy:1] divclk_d;   // Output (Data) of the divider stages
-   wire [DivideBy:0] divclk_clk;   // Clock Input of the divider stages
-                                   // last one unused
+   wire [DivideBy:0] divclk_clk_ena;   // Clock Enable Input of the divider stages
+                                       // last one unused
 
-   // *** Clock input first stage
-   assign divclk_clk[0] = clkin;
+   // *** Clock enable first stage
+   assign divclk_clk_ena[0] = clkin;
 
-   // *** Divider stages
+   // *** Divider stages on global clock
+   // Maybe a counter-divider would perform better ...
    generate
       for (gi=1; gi<=DivideBy; gi=gi+1)
 	begin: divider
-	   assign divclk_clk[gi] = divclk_d[gi]; // Clock Input
-	   always @ (posedge divclk_clk[gi-1] or negedge rstx) begin
+	   assign divclk_clk_ena[gi] = divclk_d[gi]; // Clock Enable Input
+	   always @ (posedge clkin or negedge rstx) begin
 	      if (rstx == 0) begin
 		 // Reset the divider
 		 divclk_d[gi] <= 0;
 	      end
 	      else begin
-		 // Divide by one
-		 divclk_d[gi] <= ~divclk_d[gi];
+		 // Divide by one, use previous clocks as enable
+		 if (&divclk_clk_ena[gi-1:0])
+		   divclk_d[gi] <= ~divclk_d[gi];
 	      end
 	   end
 	end    // divider
@@ -224,7 +220,7 @@ module BinaryCounter ( clk, rstx, counter, ovr );
    end
 
    // *** This is the counter
-   always @ (posedge clk) begin
+   always @ (posedge clk or negedge rstx) begin
       if (rstx == 0) begin
 	 // Init conditions
 	 ovr <= 0;
