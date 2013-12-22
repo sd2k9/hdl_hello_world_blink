@@ -13,12 +13,11 @@ Requirements
 ------------
 - Device: Lattice MachXO
 - Board: MachXO Starter Kit
-- Software: Lattice Diamond version??? TODO
+- Software: Lattice Diamond version 2.2
 
 How to program the device
 -------------------------
-??? TODO
-Just run the supplied script: ./program_it.sh
+Use menu Tools/Programmer in Lattice Diamond Software
 
 License
 -------
