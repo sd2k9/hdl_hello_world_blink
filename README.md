@@ -36,4 +36,4 @@ License
 
 Homepage
 --------
-https://sethdepot.org/site/HdlLsiSources#Hello_World_Blinker
+https://sethdepot.org/site/HdlLsiSources.html#Hello_World_Blinker
